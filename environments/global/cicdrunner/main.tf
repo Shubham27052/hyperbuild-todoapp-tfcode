@@ -33,7 +33,7 @@ module "vm_cicdrunner" {
 
 }
 
-resource "azurerm_virtual_machine_extension" "vm_runner_extension" {
+resource "azurerm_virtual_machine_extension" "vm_runner_extension_terraform" {
   name                 = "InstallTerraform"
   virtual_machine_id   = module.vm_cicdrunner.virtual_machine_id
   publisher            = "Microsoft.Azure.Extensions"
@@ -47,3 +47,4 @@ resource "azurerm_virtual_machine_extension" "vm_runner_extension" {
 
   protected_settings = jsonencode({})
 }
+

@@ -93,6 +93,13 @@ resource "azurerm_linux_virtual_machine" "vm_main" {
 
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+  boot_diagnostics {
+    
+  }
+
   source_image_reference {
     publisher = "Canonical"
     offer     = "ubuntu-24_04-lts"

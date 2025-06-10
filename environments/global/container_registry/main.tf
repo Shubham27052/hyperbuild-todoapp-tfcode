@@ -12,8 +12,7 @@ data "terraform_remote_state" "global_resource_group" {
 
 resource "azurerm_container_registry" "acr_global" {
   name                = "ACRnoteapp"
-  resource_group_name = data.terraform_remote_state.global_resource_group.outputs.resource_group_name
-  location            = data.terraform_remote_state.global_resource_group.outputs.resource_group_location
+  resource_group_name = data.terraform_remote_state.global_resource_group.outputs.global_rg_name
+  location            = data.terraform_remote_state.global_resource_group.outputs.global_rg_location
   sku                 = "Basic"
-
 }
