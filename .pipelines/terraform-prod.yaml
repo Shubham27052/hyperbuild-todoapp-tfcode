@@ -1,0 +1,49 @@
+trigger:
+  paths:
+    include:
+      - environments/prod/*
+
+
+variables:
+ - group: terraform-secrets
+
+stages:
+  - stage: TerraformDeployment
+    displayName: Terraform CI/CD
+    jobs:
+      - job: DeployProdEnv
+        displayName: "Deploy Prod environment"
+        pool:
+            name: noteapp-agents
+        steps:
+            - script: |
+                cd $(Build.SourcesDirectory)/environments/prod/
+                terraform init -input=false
+              env:
+                ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+                ARM_TENANT_ID : $(ARM_TENANT_ID)
+                ARM_USE_MSI: $(ARM_USE_MSI)
+              displayName: 'Terraform Init'
+
+            - script: |
+                cd $(Build.SourcesDirectory)/environments/prod/                
+                terraform plan -out=tfplan
+              displayName: 'Terraform Plan'
+
+      - deployment: TerraformApplyProd
+        displayName: "Deploy to prod env post approval"
+        environment: terraform-prod-env
+        pool: 
+          name: noteapp-agents
+        dependsOn: DeployProdEnv
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                   cd $(Build.SourcesDirectory)/environments/prod/                
+                   terraform apply -auto-approve tfplan
+                  displayName: 'Terraform Apply'
+            
+
+
