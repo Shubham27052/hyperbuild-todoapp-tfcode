@@ -8,11 +8,11 @@ variables:
  - group: terraform-secrets
 
 stages:
-  - stage: TerraformDeployment
-    displayName: Terraform CI/CD
+  - stage: Initialize
+    displayName: Initialize
     jobs:
-      - job: DeployProdEnv
-        displayName: "Deploy Prod environment"
+      - job: InitializeProdEnv
+        displayName: "Initialize Prod environment"
         pool:
             name: noteapp-agents
         steps:
@@ -30,13 +30,15 @@ stages:
                 terraform plan -out=tfplan
               displayName: 'Terraform Plan'
 
+
+  - stage: Deploy
+    displayName: Deploy
+    jobs:
       - deployment: TerraformApplyProd
         displayName: "Deploy to prod env post approval"
         environment: terraform-prod-env
-        condition: succeeded()
         pool: 
           name: noteapp-agents
-        dependsOn: DeployProdEnv
         strategy:
           runOnce:
             deploy:
