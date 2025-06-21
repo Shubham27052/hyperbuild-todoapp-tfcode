@@ -36,6 +36,10 @@ resource "azurerm_linux_web_app" "webapp_dev" {
   location            = azurerm_resource_group.rg_dev.location
   service_plan_id     = azurerm_service_plan.asp_dev.id
 
+  app_settings = { 
+    "DOCKER_ENABLE_CI" = true
+   }
+
   site_config {
     always_on                               = false
     container_registry_use_managed_identity = true

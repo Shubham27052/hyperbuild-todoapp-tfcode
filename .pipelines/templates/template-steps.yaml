@@ -1,0 +1,26 @@
+parameters:
+ - name: environment
+   type: string
+   default: dev
+   values:
+    - prod
+    - dev
+    
+steps:
+  - script: |
+      cd $(Build.SourcesDirectory)/environments/${{ parameters.environment }}/
+      terraform init -input=false
+    env:
+      ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+      ARM_TENANT_ID : $(ARM_TENANT_ID)
+      ARM_USE_MSI: $(ARM_USE_MSI)
+    displayName: 'Terraform Init'
+
+  - script: |
+      cd $(Build.SourcesDirectory)/environments/${{ parameters.environment }}/                
+      terraform plan -out=tfplan
+    displayName: 'Terraform Plan'
+
+  
+
+

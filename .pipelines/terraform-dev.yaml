@@ -3,9 +3,10 @@ trigger:
     include:
       - environments/dev/*
 
-
+      
 variables:
  - group: terraform-secrets
+
 
 stages:
   - stage: TerraformDeployment
@@ -15,20 +16,10 @@ stages:
         displayName: "Deploy Dev environment"
         pool:
             name: noteapp-agents
-        steps:
-            - script: |
-                cd $(Build.SourcesDirectory)/environments/dev/
-                terraform init -input=false
-              env:
-                ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-                ARM_TENANT_ID : $(ARM_TENANT_ID)
-                ARM_USE_MSI: $(ARM_USE_MSI)
-              displayName: 'Terraform Init'
-
-            - script: |
-                cd $(Build.SourcesDirectory)/environments/dev/                
-                terraform plan -out=tfplan
-              displayName: 'Terraform Plan'
+        steps:   
+            - template: templates/template-steps.yaml
+              parameters:
+                environment: dev
 
             - script: |
                 cd $(Build.SourcesDirectory)/environments/dev/                

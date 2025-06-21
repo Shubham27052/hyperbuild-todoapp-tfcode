@@ -7,6 +7,7 @@ trigger:
 variables:
  - group: terraform-secrets
 
+ 
 stages:
   - stage: Initialize
     displayName: Initialize
@@ -16,19 +17,9 @@ stages:
         pool:
             name: noteapp-agents
         steps:
-            - script: |
-                cd $(Build.SourcesDirectory)/environments/prod/
-                terraform init -input=false
-              env:
-                ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-                ARM_TENANT_ID : $(ARM_TENANT_ID)
-                ARM_USE_MSI: $(ARM_USE_MSI)
-              displayName: 'Terraform Init'
-
-            - script: |
-                cd $(Build.SourcesDirectory)/environments/prod/                
-                terraform plan -out=tfplan
-              displayName: 'Terraform Plan'
+          - template: templates/template-steps.yaml
+            parameters:
+              environment: prod
 
 
   - stage: Deploy
