@@ -59,7 +59,7 @@ resource "azurerm_role_assignment" "roleassign_prodwebapp_contributor" {
 
 
 
-resource "azurerm_role_assignment" "roleassign_prodwebapp_contributor" {
+resource "azurerm_role_assignment" "roleassign_prodwebapp_acrpull" {
   scope = data.terraform_remote_state.global_acr.outputs.acr_global_id
   role_definition_name = "AcrPull"
   principal_id = azurerm_linux_web_app.webapp_prod.identity.principal_id
