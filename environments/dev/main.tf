@@ -27,7 +27,7 @@ resource "azurerm_linux_web_app" "webapp_dev" {
     always_on = false
 
     application_stack {
-      docker_image_name = "noteapp/dev:latest"
+      docker_image_name = "noteappdev:latest"
       docker_registry_url = "https://acrnoteapp.azurecr.io"
 
     }
