@@ -33,6 +33,7 @@ stages:
       - deployment: TerraformApplyProd
         displayName: "Deploy to prod env post approval"
         environment: terraform-prod-env
+        condition: succeeded()
         pool: 
           name: noteapp-agents
         dependsOn: DeployProdEnv
