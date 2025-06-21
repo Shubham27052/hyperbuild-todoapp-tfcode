@@ -13,7 +13,7 @@ resource "azurerm_service_plan" "asp_dev" {
   resource_group_name = azurerm_resource_group.rg_dev.name
   location            = azurerm_resource_group.rg_dev.location
   os_type             = "Linux"
-  sku_name            = "F1"
+  sku_name            = "B1"
 }
 
 
