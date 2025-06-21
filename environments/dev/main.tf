@@ -30,7 +30,12 @@ resource "azurerm_linux_web_app" "webapp_dev" {
       docker_image_name = "noteappdev:latest"
       docker_registry_url = "https://acrnoteapp.azurecr.io"
 
+
     }
+  }
+
+  identity {
+   type = "SystemAssigned"
   }
 
 }
