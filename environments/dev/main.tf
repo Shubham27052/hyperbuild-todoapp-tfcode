@@ -25,12 +25,11 @@ resource "azurerm_linux_web_app" "webapp_dev" {
 
   site_config {
     always_on = false
-
+    container_registry_use_managed_identity = true
+  
     application_stack {
       docker_image_name = "noteappdev:latest"
       docker_registry_url = "https://acrnoteapp.azurecr.io"
-
-
     }
   }
 
