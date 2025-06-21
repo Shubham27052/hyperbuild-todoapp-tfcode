@@ -53,7 +53,7 @@ resource "azurerm_linux_web_app" "webapp_dev" {
 }
 
 
-resource "azurerm_role_assignment" "roleassign_prodwebapp_contributor" {
+resource "azurerm_role_assignment" "roleassign_devwebapp_contributor" {
   scope = data.terraform_remote_state.global_acr.outputs.acr_global_id
   role_definition_name = "Contributor"
   principal_id = azurerm_linux_web_app.webapp_dev.identity.principal_id
@@ -61,7 +61,7 @@ resource "azurerm_role_assignment" "roleassign_prodwebapp_contributor" {
 }
 
 
-resource "azurerm_role_assignment" "roleassign_prodwebapp_contributor" {
+resource "azurerm_role_assignment" "roleassign_devwebapp_acrpull" {
   scope = data.terraform_remote_state.global_acr.outputs.acr_global_id
   role_definition_name = "AcrPull"
   principal_id = azurerm_linux_web_app.webapp_dev.identity.principal_id
