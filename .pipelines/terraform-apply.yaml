@@ -1,9 +1,9 @@
 # azure-pipelines.yml
 
-trigger:
-  branches:
-    include:
-      - main
+# trigger:
+#   branches:
+#     include:
+#       - main
 
 parameters:
   - name: services
