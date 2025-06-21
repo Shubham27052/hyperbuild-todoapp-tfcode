@@ -10,4 +10,4 @@
 # Ignore .terraform directories (modules, plugins, etc.)
 **/.terraform/
 
-
+creds.txt

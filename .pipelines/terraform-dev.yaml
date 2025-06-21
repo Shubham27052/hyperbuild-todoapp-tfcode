@@ -1,0 +1,29 @@
+# azure-pipelines.yml
+
+trigger:
+  paths:
+    include:
+      - environments/dev/*
+
+stages:
+  - stage: TerraformDeployment
+    displayName: Terraform CI/CD
+    jobs:
+      - job: Deploy Dev environment
+        pool:
+            name: noteapp-agents
+        steps:
+            - script: |
+                cd $(Build.SourcesDirectory)/environments/dev/
+                terraform init -input=false
+              displayName: 'Terraform Init'
+
+            - script: |
+                cd $(Build.SourcesDirectory)/environments/dev/                
+                terraform plan -out=tfplan
+              displayName: 'Terraform Plan'
+
+            - script: |
+                cd $(Build.SourcesDirectory)/environments/dev/                
+                terraform apply -auto-approve tfplan
+              displayName: 'Terraform Apply'
