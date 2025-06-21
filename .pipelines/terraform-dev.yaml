@@ -7,7 +7,7 @@ stages:
   - stage: TerraformDeployment
     displayName: Terraform CI/CD
     jobs:
-      - job: Deploy Dev environment
+      - job: DeployDevEnv
         displayName: "Deploy Dev environment"
         pool:
             name: noteapp-agents
